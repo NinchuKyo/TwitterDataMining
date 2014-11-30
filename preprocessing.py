@@ -8,7 +8,7 @@ def main():
     path = '/home/muha/Documents/TwitterDataset/'
 
     PREV_TIME = time.time()
-    #reformat_tweets(path)
+    reformat_tweets(path)
     print('{0:.2f} seconds elapsed'.format(time.time() - PREV_TIME))
 
 
@@ -17,7 +17,7 @@ def filter_tweets(path):
     Remove the tweets for which we have no user profile.
     """
 
-    twitter_profile_ids = read_users_csv()
+    twitter_profile_ids = read_user_ids_csv()
     tweeters = read_tweeters(updated=False)
     files_deleted = 0
     
@@ -81,12 +81,10 @@ def reformat_tweets(path):
     print('Progress:')
     for tweeter in tweeters:
         with open(path + 'tweets/' + tweeter, 'r') as f:
-            lines = f.readlines()
-            # if len(lines) % 12 != 0:
-            #     raise Exception('File: {0}, lines: {1}.'.format(tweeter, len(lines)))
-            process_tweets(lines, path, tweeter)
+            process_tweets(f.read(), path, tweeter)
             counter += 1
             print('{0:.2f}%'.format(round((counter/num_files)*100, 2)), end='\r')
+        break
 
     # finish off all files
     for year in years:
@@ -98,25 +96,48 @@ def reformat_tweets(path):
                 myfile.write('\n]\n')
 
 
-def process_tweets(lines, path, tweeter):
+def process_tweets(content, path, tweeter):
     """
     Read tweets from file, process and convert to Json, write to new files
     grouped by the month they were posted instead of grouping by user
     """
-    try:
-        for i in xrange(0, (len(lines) - (len(lines)%12)), 12):
-            tweet_lines = lines[i:i+11]
 
-            t = tweet_lines[1].split('Type:',1)[1].strip()
-            orig = tweet_lines[2].split('Origin:',1)[1].strip()
-            text = tweet_lines[3].split('Text:',1)[1].strip()
-            url = tweet_lines[4].split('URL:',1)[1].strip()
-            ID = int(tweet_lines[5].split('ID:',1)[1].strip())
-            time = tweet_lines[6].split('Time:',1)[1].strip()
-            retNum = int(tweet_lines[7].split('RetCount:',1)[1].strip())
-            fav = tweet_lines[8].split('Favorite:',1)[1].strip().lower() == 'true'
-            ME = tweet_lines[9].split('MentionedEntities:',1)[1].strip().split()
-            HTs = tweet_lines[10].split('Hashtags:',1)[1].strip().split()
+    tweets = content.split('***\n***\n')
+    tweets[0] = tweets[0].replace('***\n', '')
+    tweets[-1] = tweets[-1].replace('***\n', '')
+
+    try:
+        for tweet in tweets:
+            attributes = ('Type:', 'Origin:', 'Text:', 'URL:', 'ID:', 'Time:', 'RetCount:', 'Favorite:', 'MentionedEntities:', 'Hashtags:')
+            values = []
+            first = 0
+            end = 0
+            first = ''
+            last = ''
+
+            for i in xrange(len(attributes)-1):
+                first = attributes[i]
+                last = attributes[i+1]
+                start = tweet.index(first, end) + len(first)
+                end = tweet.index(last, start)
+                values.append(tweet[start:end].strip())
+
+            start = end + len(last)
+            end = len(tweet)
+            values.append(tweet[start:end].strip())
+
+            value_iter = iter(values)
+
+            t = value_iter.next()
+            orig = value_iter.next()
+            text = value_iter.next()
+            url = value_iter.next()
+            ID = int(value_iter.next())
+            time = value_iter.next()
+            retNum = int(value_iter.next())
+            fav = value_iter.next().lower() == 'true'
+            ME = value_iter.next().split()
+            HTs = value_iter.next().split()
 
             tweet = Tweet(t, orig, text, url, ID, time, retNum, fav, ME, HTs)
             json_tweet = json.dumps(tweet.__dict__, sort_keys=True)
@@ -159,7 +180,7 @@ def clean_up_orig_tweet_files(path):
         print('{0:.2f}%'.format(round((counter/num_files)*100, 2)), end='\r')
 
 
-def read_users_csv():
+def read_user_ids_csv():
     twitter_profile_ids = set()
     
     with open('users.csv', 'rb') as csvfile:
