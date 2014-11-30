@@ -5,9 +5,11 @@ import os, time, csv, json, fileinput
 
 def main():
     # path to tweets
-    path = '/home/muha/Documents/TwitterDataset/'
+    path = '/Users/duongnguyen/Downloads/TwitterDataset/'
 
     PREV_TIME = time.time()
+    # delete_empty_files(path)
+    # filter_tweets(path)
     reformat_tweets(path)
     print('{0:.2f} seconds elapsed'.format(time.time() - PREV_TIME))
 
@@ -63,7 +65,7 @@ def reformat_tweets(path):
     """
 
     tweeters = read_tweeters(updated=True)
-    num_files = 138022.0
+    num_files = float(len(tweeters))
     counter = 0
 
     # create new files
@@ -84,7 +86,6 @@ def reformat_tweets(path):
             process_tweets(f.read(), path, tweeter)
             counter += 1
             print('{0:.2f}%'.format(round((counter/num_files)*100, 2)), end='\r')
-        break
 
     # finish off all files
     for year in years:
@@ -179,6 +180,19 @@ def clean_up_orig_tweet_files(path):
         counter += 1
         print('{0:.2f}%'.format(round((counter/num_files)*100, 2)), end='\r')
 
+def delete_empty_files(path):
+
+    tweeters = read_tweeters(True)
+    files_deleted = 0
+
+    for tweeter in tweeters:
+        file_path = path + 'tweets/' + tweeter
+        if (os.stat(file_path)[6] == 0):
+            os.remove(file_path)
+            files_deleted += 1
+
+    print('Files deleted: {0}'.format(files_deleted))
+ 
 
 def read_user_ids_csv():
     twitter_profile_ids = set()
