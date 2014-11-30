@@ -4,6 +4,7 @@ import os, time, csv, json, fileinput
 from datetime import datetime
 
 def main():
+    # path to tweets
     path = '/home/muha/Documents/TwitterDataset/'
 
     PREV_TIME = time.time()
@@ -20,13 +21,13 @@ def filter_tweets(path):
     tweeters = set()
     files_deleted = 0
     
-    with open(path + 'users.csv', 'rb') as csvfile:
+    with open('users.csv', 'rb') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in csvreader:
             twitter_profile_ids.add(int(row[0]))
         print('Twitter profile IDs read: {0}'.format(len(twitter_profile_ids)))
 
-        with open(path + 'tweeters.txt', 'r') as tweeterfile:
+        with open('tweeters.txt', 'r') as tweeterfile:
             for line in tweeterfile:
                 tweeters.add(int(line))
             print('Number of Tweeters read: {0}'.format(len(tweeters)))
@@ -47,13 +48,13 @@ def filter_user_profiles(path):
     tweeters = set()
     user_profiles = []
 
-    f = open(path + 'tweeters.txt', 'r')
+    f = open('tweeters.txt', 'r')
     for line in f:
         tweeters.add(int(line))
     f.close()
     print('Finished reading in tweeters...')
 
-    f = open(path + 'users.txt', 'r')
+    f = open('users.txt', 'r')
     for line in f:
         columns = line.split('\t')
         if len(columns) >= 6 and columns[0].isdigit() and columns[2].isdigit() and columns[3].isdigit() and \
@@ -67,7 +68,7 @@ def filter_user_profiles(path):
     user_profiles_of_tweeters = [profile for profile in user_profiles if profile[0] in tweeters]
     print('Finished filtering user profiles...')
 
-    with open(path + 'users.csv', 'wb') as csvfile:
+    with open('users.csv', 'wb') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
         csvwriter.writerows(user_profiles_of_tweeters)
     print('Finished writing to csv file...')
@@ -82,7 +83,7 @@ def reformat_tweets(path):
     num_files = 138022.0
     counter = 0
 
-    with open(path + 'tweeters_updated.txt', 'r') as f:
+    with open('tweeters_updated.txt', 'r') as f:
         for line in f:
             tweeters.add(line.strip())
 
@@ -165,7 +166,7 @@ def clean_up_orig_tweet_files(path):
     counter = 0
     line_starters = ('***', 'Type', 'Origin', 'Text', 'URL', 'ID', 'Time', 'RetCount', 'Favorite', 'MentionedE', 'Hashtags')
 
-    f = open(path + 'tweeters_updated.txt', 'r')
+    f = open('tweeters_updated.txt', 'r')
     for line in f:
         tweeters.add(line.strip())
     f.close()
