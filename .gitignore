@@ -1,0 +1,28 @@
+*.swp
+*~
+.DS_Store
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.rej
+*.swo
+*.vi
+*.sass-cache
+*.pyc
+
+# OS or Editor folders
+.DS_Store
+.cache
+.project
+.settings
+.tmproj
+Thumbs.db
+
+# Folders to ignore
+.idea/
+
+# build script local files
+build/**/*
+build/*
