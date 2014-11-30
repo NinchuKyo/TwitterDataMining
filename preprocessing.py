@@ -10,6 +10,17 @@ TWEET_COUNT = 'tweet_count'
 FOLLOWER_COUNT = 'follower_count'
 FAVOURITE_COUNT = 'favourite_count'
 
+TYPE = 'type'
+ORIGINAL = 'orig'
+PROCESSED_TEXT = 'text'
+EMBEDDED_URL = 'url'
+TWEET_ID = 'id'
+TIME_TWEETED = 'time'
+RETWEET_COUNT = 'retNum'
+FAVOURITE = 'fav'
+MENTIONED_ENTITIES = 'ME'
+HASHTAGS = 'HTs'
+
 def main():
     # path to tweets
     path = '/Users/duongnguyen/Downloads/TwitterDataset/'
@@ -19,7 +30,7 @@ def main():
     json_filename = 'users.json'
 
     # create_json_from_csv(filename)
-    # user_list = read_json(json_filename)
+    # user_list = read_json(json_filename, user_decoder)
 
     PREV_TIME = time.time()
     # delete_empty_files(path)
@@ -145,7 +156,7 @@ def process_tweets(content, path, tweeter):
 
             t = value_iter.next()
             orig = value_iter.next()
-            text = value_iter.next()
+            txt = value_iter.next()
             url = value_iter.next()
             ID = int(value_iter.next())
             time = value_iter.next()
@@ -154,7 +165,7 @@ def process_tweets(content, path, tweeter):
             ME = value_iter.next().split()
             HTs = value_iter.next().split()
 
-            tweet = Tweet(t, orig, text, url, ID, time, retNum, fav, ME, HTs)
+            tweet = Tweet(t, orig, txt, url, ID, time, retNum, fav, ME, HTs)
             json_tweet = json.dumps(tweet.__dict__, sort_keys=True)
 
             # find file to append to
@@ -259,12 +270,15 @@ def user_decoder(obj):
     return User(obj[USER_ID], obj[USERNAME], obj[FRIEND_COUNT], obj[FOLLOWER_COUNT],
         obj[TWEET_COUNT], obj[FAVOURITE_COUNT])
 
-def read_json(filename):
+def tweet_decoder(obj):
+    return Tweet(obj[TYPE], obj[ORIGINAL], obj[PROCESSED_TEXT], obj[EMBEDDED_URL], obj[TWEET_ID],
+        obj[TIME_TWEETED], obj[RETWEET_COUNT], obj[FAVOURITE], obj[MENTIONED_ENTITIES], obj[HASHTAGS])
 
-    with open(filename, 'r') as json_file:  
-        user_list = json.load(json_file, object_hook=user_decoder)
+def read_json(filename, decoder):
+    with open(filename, 'r') as json_file:
+        obj_list = json.load(json_file, object_hook=decoder)
         
-    return user_list
+    return obj_list
 
 def read_user_ids_csv():
     twitter_profile_ids = set()
