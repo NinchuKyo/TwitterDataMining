@@ -226,8 +226,8 @@ def filter_out_HTs_and_MEs(path):
             tweets = read_json(filename, tweet_decoder)
             
             for tweet in tweets:
-                HTs.append(tweet.HTs)
-                MEs.append(tweet.ME)
+                HTs.append([HT.encode("utf-8") for HT in tweet.HTs])
+                MEs.append([ME.encode("utf-8") for ME in tweet.ME])
             
             filename = '{0}{1}/{2}_HTs.csv'.format(path, year, month)
             with open(filename, 'wb') as csvfile:
