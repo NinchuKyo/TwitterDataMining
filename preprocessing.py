@@ -37,6 +37,7 @@ def main():
     start_time = time.time()
 
     # call functions here
+    filter_out_HTs_and_MEs(path)
 
     print('{0:.2f} seconds elapsed'.format(time.time() - start_time))
 
@@ -214,12 +215,38 @@ def process_user(row):
         favourite_count)
     return user
 
+def filter_out_HTs_and_MEs(path):
+    years = (2009,) #(2007, 2008, 2009, 2010, 2011)
+    months = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+    for year in years:
+        for month in months:
+            HTs = []
+            MEs = []
+            filename = '{0}{1}/{2}.json'.format(path, year, month)
+            tweets = read_json(filename, tweet_decoder)
+            
+            for tweet in tweets:
+                HTs.append(tweet.HTs)
+                MEs.append(tweet.ME)
+            
+            filename = '{0}{1}/{2}_HTs.csv'.format(path, year, month)
+            with open(filename, 'wb') as csvfile:
+                csvwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                csvwriter.writerows(HTs)
+
+            filename = '{0}{1}/{2}_MEs.csv'.format(path, year, month)
+            with open(filename, 'wb') as csvfile:
+                csvwriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+                csvwriter.writerows(MEs)
+
+            print('Processed .../{0}/{1}.json'.format(year, month))
+
 def write_file(json_content):
     write_filename = 'users.json'
     
     with open(write_filename, 'w+') as json_file:
         json_file.write(json_content)
-     
+
 def create_json_from_csv(filename):
     user_json_list = [] 
 
@@ -243,7 +270,7 @@ def tweet_decoder(obj):
 def read_json(filename, decoder):
     with open(filename, 'r') as json_file:
         obj_list = json.load(json_file, object_hook=decoder)
-        
+    
     return obj_list
 
 def read_user_ids_csv():
