@@ -94,8 +94,8 @@ def reformat_tweets(path):
     counter = 0
 
     # create new files
-    years = [2007, 2008, 2009, 2010, 2011]
-    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    years = (2006, 2007, 2008, 2009, 2010, 2011)
+    months = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
     for year in years:
         try:
             os.mkdir('{0}tweets_json/{1}'.format(path, year), 0775)
