@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 from datetime import datetime
-import os, time, csv, json, fileinput
+import os, time, csv, json, fileinput, sys
 
+# twitter user profile attributes
 USER_ID = 'userID'
 USERNAME = 'username'
 FRIEND_COUNT = 'friend_count'
@@ -10,6 +11,7 @@ TWEET_COUNT = 'tweet_count'
 FOLLOWER_COUNT = 'follower_count'
 FAVOURITE_COUNT = 'favourite_count'
 
+# tweet attributes
 TYPE = 'type'
 ORIGINAL = 'orig'
 PROCESSED_TEXT = 'text'
@@ -22,21 +24,21 @@ MENTIONED_ENTITIES = 'ME'
 HASHTAGS = 'HTs'
 
 def main():
-    # path to tweets
-    path = '/Users/duongnguyen/Downloads/TwitterDataset/'
-    # path = '/home/muha/Documents/TwitterDataset'
-    
-    filename = 'users.csv'
-    json_filename = 'users.json'
+    path = ''
 
-    # create_json_from_csv(filename)
-    # user_list = read_json(json_filename, user_decoder)
+    if len(sys.argv) == 2:
+        path = sys.argv[1]
+        if not path.endswith('/'):
+            path = path + '/'
+    else:
+        print('Require path to tweets as first argument.')
+        exit(1)
 
-    PREV_TIME = time.time()
-    # delete_empty_files(path)
-    # filter_tweets(path)
-    reformat_tweets(path)
-    print('{0:.2f} seconds elapsed'.format(time.time() - PREV_TIME))
+    start_time = time.time()
+
+    # call functions here
+
+    print('{0:.2f} seconds elapsed'.format(time.time() - start_time))
 
 
 def filter_tweets(path):
@@ -50,7 +52,7 @@ def filter_tweets(path):
     
     files_to_delete = tweeters - twitter_profile_ids
     for ftd in files_to_delete:
-        os.remove(path + 'tweets/' + ftd)
+        os.remove(path + ftd)
         files_deleted += 1
 
     print('Files deleted: {0}'.format(files_deleted))
@@ -107,7 +109,7 @@ def reformat_tweets(path):
 
     print('Progress:')
     for tweeter in tweeters:
-        with open(path + 'tweets/' + tweeter, 'r') as f:
+        with open(path + tweeter, 'r') as f:
             process_tweets(f.read(), path, tweeter)
             counter += 1
             print('{0:.2f}%'.format(round((counter/num_files)*100, 2)), end='\r')
@@ -181,37 +183,13 @@ def process_tweets(content, path, tweeter):
         print('Encountered an error while processing file: {0}'.format(tweeter))
         print(e)
 
-
-def clean_up_orig_tweet_files(path):
-    """
-    Remove invalid lines in tweet files
-    """
-
-    tweeters = read_tweeters(updated=True)
-    num_files = 138022.0
-    counter = 0
-    line_starters = ('***', 'Type', 'Origin', 'Text', 'URL', 'ID', 'Time', 'RetCount', 'Favorite', 'MentionedE', 'Hashtags')
-
-    print('Progress:')
-    for tweeter in tweeters:
-        #deleted_lines = []
-        for line in fileinput.input(path + 'tweets/' + tweeter, inplace=True):
-            if not line.startswith(line_starters):
-                #deleted_lines.append(line)
-                continue
-            print(line, end='')
-        #print('\n'.join(deleted_lines))
-        
-        counter += 1
-        print('{0:.2f}%'.format(round((counter/num_files)*100, 2)), end='\r')
-
 def delete_empty_files(path):
 
     tweeters = read_tweeters(True)
     files_deleted = 0
 
     for tweeter in tweeters:
-        file_path = path + 'tweets/' + tweeter
+        file_path = path + tweeter
         if (os.stat(file_path)[6] == 0):
             os.remove(file_path)
             files_deleted += 1
@@ -231,18 +209,6 @@ def process_user(row):
     follower_count = int(row[3])
     tweet_count = int(row[4])
     favourite_count = int(row[5])
-
-    user = User(userID, username, friend_count, follower_count, tweet_count,
-        favourite_count)
-    return user
-
-def process_user_from_json(user):
-    userID = user[USER_ID]
-    username = user[USERNAME]
-    friend_count = user[FRIEND_COUNT]
-    follower_count = user[FOLLOWER_COUNT]
-    tweet_count = user[TWEET_COUNT]
-    favourite_count = user[FAVOURITE_COUNT]
 
     user = User(userID, username, friend_count, follower_count, tweet_count,
         favourite_count)
@@ -290,7 +256,6 @@ def read_user_ids_csv():
 
     print('Twitter profile IDs read: {0}'.format(len(twitter_profile_ids)))
     return twitter_profile_ids
-
 
 def read_tweeters(updated):
     tweeters = set()
