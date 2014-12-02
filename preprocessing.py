@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 from datetime import datetime
-import os, time, csv, json, fileinput, sys
+import os, time, csv, json, sys
 
 # twitter user profile attributes
 USER_ID = 'userID'
@@ -37,7 +37,7 @@ def main():
     start_time = time.time()
 
     # call functions here
-    filter_out_HTs_and_MEs(path)
+    convert_to_baskets(path)
 
     print('{0:.2f} seconds elapsed'.format(time.time() - start_time))
 
@@ -97,7 +97,7 @@ def reformat_tweets(path):
     counter = 0
 
     # create new files
-    years = (2006, 2007, 2008, 2009, 2010, 2011)
+    years = (2007, 2008, 2009, 2010, 2011)
     months = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
     for year in years:
         try:
@@ -185,6 +185,9 @@ def process_tweets(content, path, tweeter):
         print(e)
 
 def delete_empty_files(path):
+    """
+    Obviously
+    """
 
     tweeters = read_tweeters(True)
     files_deleted = 0
@@ -196,6 +199,46 @@ def delete_empty_files(path):
             files_deleted += 1
 
     print('Files deleted: {0}'.format(files_deleted))
+
+def convert_to_baskets(path):
+    """
+    Need to convert csv files to baskets in order to read data into Orange tables
+    """
+
+    years = (2007, 2008, 2009, 2010, 2011)
+    months = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+
+    for year in years:
+        for month in months:
+            filename = '{0}{1}/{2}_HTs.csv'.format(path, year, month)
+            new_filename = '{0}{1}/{2}_HTs.basket'.format(path, year, month)
+
+            non_empty_lines = []
+
+            with open(filename) as f:
+                for line in f:
+                    if not len(line.strip()) == 0:
+                        non_empty_lines.append(line)
+
+            with open(new_filename, 'w') as f:
+                f.writelines(non_empty_lines)
+
+            print('Processed file: .../{0}/{1}_HTs.csv'.format(year, month))
+
+            filename = '{0}{1}/{2}_MEs.csv'.format(path, year, month)
+            new_filename = '{0}{1}/{2}_MEs.basket'.format(path, year, month)
+
+            non_empty_lines = []
+
+            with open(filename) as f:
+                for line in f:
+                    if not len(line.strip()) == 0:
+                        non_empty_lines.append(line)
+
+            with open(new_filename, 'w') as f:
+                f.writelines(non_empty_lines)
+
+            print('Processed file: .../{0}/{1}_MEs.csv'.format(year, month))
 
 def process_user(row):
     """
@@ -216,6 +259,10 @@ def process_user(row):
     return user
 
 def filter_out_HTs_and_MEs(path):
+    """
+    Store hashtags and mentioned entities separately in csv files
+    """
+
     years = (2009,) #(2007, 2008, 2009, 2010, 2011)
     months = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
     for year in years:
@@ -240,6 +287,12 @@ def filter_out_HTs_and_MEs(path):
                 csvwriter.writerows(MEs)
 
             print('Processed .../{0}/{1}.json'.format(year, month))
+
+
+#####################
+# Utility functions
+#####################
+
 
 def write_file(json_content):
     write_filename = 'users.json'
@@ -295,6 +348,9 @@ def read_tweeters(updated):
     print('Number of Tweeters read: {0}'.format(len(tweeters)))
     return tweeters
 
+#####################
+# Classes
+#####################
 
 class Tweet:
     def __init__(self, t, orig, text, url, ID, time, retNum, fav, ME, HTs):
