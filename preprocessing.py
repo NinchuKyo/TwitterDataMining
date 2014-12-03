@@ -37,7 +37,7 @@ def main():
     start_time = time.time()
 
     # call functions here
-    convert_to_baskets(path)
+    generate_baskets_of_usernames(path)
 
     print('{0:.2f} seconds elapsed'.format(time.time() - start_time))
 
