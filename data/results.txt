@@ -1,0 +1,397 @@
+Command line examples:
+Frequent Itemsets
+python association_mining.py ~/Documents/TwitterDataset/tweets_json/2010/May_HTs.basket false 0.007 0.6
+Association Rules
+python association_mining.py ~/Documents/TwitterDataset/tweets_json/2010/May_HTs.basket true 0.001 0.3
+
+-------------------
+2011/Apr Hashtags
+-------------------
+Found 12 itemsets with min support of 0.005
+Support   Frequent_Itemset
+(0.0411)  ff
+(0.0213)  fb
+(0.0099)  royalwedding
+(0.0093)  teamfollowback
+(0.0091)  constantcontact
+(0.0070)  tcot
+(0.0064)  socialmedia
+(0.0059)  earthday
+(0.0055)  jobs
+(0.0052)  in
+(0.0050)  quote
+
+Found 7 rules with minsupport 0.0015 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  1.0   411  1000aday -> 500aday
+ 0.0  0.7   411  500aday -> 1000aday
+ 0.0  0.9   310  autofollowback -> instantfollowback
+ 0.0  0.5   310  instantfollowback -> autofollowback
+ 0.0  0.9    98  autofollowback -> teamfollowback
+ 0.0  0.8    91  500aday -> teamfollowback
+ 0.0  0.8    88  instantfollowback -> teamfollowback
+
+
+-------------------
+2011/Mar Hashtags
+-------------------
+Found 15 itemsets with min support of 0.005
+Support   Frequent_Itemset
+(0.0332)  ff
+(0.0232)  sxsw
+(0.0217)  fb
+(0.0100)  constantcontact
+(0.0097)  japan
+(0.0090)  winning
+(0.0076)  tcot
+(0.0068)  jobs
+(0.0067)  quote
+(0.0060)  socialmedia
+(0.0053)  tsunami
+(0.0053)  teamfollowback
+(0.0051)  sxswi
+
+Found 7 rules with minsupport 0.001 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.3   202  news -> phoenix
+ 0.0  0.7   202  phoenix -> news
+ 0.0  0.8   106  teaparty -> tcot
+ 0.0  0.8   102  tlot -> tcot
+ 0.0  0.4    57  p2 -> tcot
+ 0.0  0.5    55  earthquake -> japan
+ 0.0  0.4    44  tsunami -> japan
+
+-------------------
+2011/Feb Hashtags
+-------------------
+Found 11 itemsets with min support of 0.005
+Support   Frequent_Itemset
+(0.0381)  ff
+(0.0209)  fb
+(0.0133)  oscars
+(0.0132)  superbowl
+(0.0118)  constantcontact
+(0.0083)  tcot
+(0.0082)  egypt
+(0.0076)  jobs
+(0.0073)  grammys
+(0.0071)  quote
+(0.0057)  socialmedia
+
+Found 12 rules with minsupport 0.0008 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.8   765  good_gawd -> rmf
+ 0.0  0.9   765  rmf -> good_gawd
+ 0.0  0.3   142  giveaway -> win
+ 0.0  0.4   142  win -> giveaway
+ 0.0  0.5   110  etsybot -> etsy
+ 0.0  0.4   104  handmade -> etsy
+ 0.0  0.8    93  tlot -> tcot
+ 0.0  0.8    92  teaparty -> tcot
+ 0.0  0.6    75  jan25 -> egypt
+ 0.0  0.6    72  gop -> tcot
+ 0.0  0.4    29  packers -> superbowl
+ 0.0  0.3     8  followfriday -> ff
+
+-------------------
+2011/Jan Hashtags
+-------------------
+Found 12 itemsets with min support of 0.005
+Support   Frequent_Itemset
+(0.0393)  ff
+(0.0248)  fb
+(0.0141)  constantcontact
+(0.0114)  jobs
+(0.0104)  sotu
+(0.0087)  quote
+(0.0087)  tcot
+(0.0068)  teamfollowback
+(0.0068)  socialmedia
+(0.0060)  ces
+(0.0058)  in
+(0.0055)  travel
+
+Found 16 rules with minsupport 0.002 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.9   442  glam -> media job
+ 0.0  1.0   442  media job -> glam
+ 0.0  1.0   329  glam job -> media
+ 0.0  0.7   329  media -> glam job
+ 0.0  0.7   328  media -> glam
+ 0.0  1.0   328  glam -> media
+ 0.0  0.9   196  glam media -> job
+ 0.0  0.4   196  job -> glam media
+ 0.0  0.9   195  glam -> job
+ 0.0  0.4   195  job -> glam
+ 0.0  0.7   145  media -> job
+ 0.0  0.4   145  job -> media
+ 0.0  1.0   143  instantfollowback -> teamfollowback
+ 0.0  0.3   143  teamfollowback -> instantfollowback
+ 0.0  1.0   141  500aday -> teamfollowback
+ 0.0  0.3   141  teamfollowback -> 500aday
+
+-------------------
+2010/Dec Hashtags
+-------------------
+Found 13 itemsets with min support of 0.005
+Support   Frequent_Itemset
+(0.0438)  ff
+(0.0289)  fb
+(0.0190)  constantcontact
+(0.0148)  jobs
+(0.0109)  quote
+(0.0080)  tcot
+(0.0072)  christmas
+(0.0067)  giveaway
+(0.0063)  socialmedia
+(0.0062)  in
+(0.0059)  travel
+(0.0055)  win
+(0.0054)  nfl
+
+Found 12 rules with minsupport 0.002 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  1.0   420  glam -> media jobs
+ 0.0  1.0   420  media jobs -> glam
+ 0.0  1.0   328  glam jobs -> media
+ 0.0  0.8   328  media -> glam jobs
+ 0.0  0.8   326  media -> glam
+ 0.0  1.0   326  glam -> media
+ 0.0  1.0    67  glam media -> jobs
+ 0.0  1.0    66  glam -> jobs
+ 0.0  0.4    64  win -> giveaway
+ 0.0  0.4    64  giveaway -> win
+ 0.0  0.8    57  baltimore -> jobs
+ 0.0  0.8    52  media -> jobs
+
+-------------------
+2010/Nov Hashtags
+-------------------
+Found 12 itemsets with min support of 0.005
+Support   Frequent_Itemset
+(0.0358)  ff
+(0.0258)  fb
+(0.0177)  constantcontact
+(0.0112)  tcot
+(0.0103)  blackfriday
+(0.0099)  quote
+(0.0094)  jobs
+(0.0065)  thanksgiving
+(0.0065)  in
+(0.0064)  cybermonday
+(0.0056)  travel
+(0.0052)  etsy
+
+Found 10 rules with minsupport 0.001 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  1.0   972  blacknews -> defender
+ 0.0  1.0   972  defender -> blacknews
+ 0.0  1.0   789  media jobs -> glam
+ 0.0  1.0   789  glam -> media jobs
+ 0.0  0.8   588  stlouis -> comedy stl
+ 0.0  1.0   588  comedy stl -> stlouis
+ 0.0  0.9   546  comedy -> stlouis stl
+ 0.0  0.9   546  stlouis stl -> comedy
+ 0.0  0.9   514  comedy -> stlouis
+ 0.0  0.8   514  stlouis -> comedy
+
+-------------------
+2010/Oct Hashtags
+-------------------
+Found 12 itemsets with min support of 0.005
+Support   Frequent_Itemset
+(0.0482)  ff
+(0.0274)  fb
+(0.0179)  tcot
+(0.0164)  constantcontact
+(0.0094)  quote
+(0.0078)  halloween
+(0.0064)  jobs
+(0.0063)  in
+(0.0059)  followfriday
+(0.0055)  socialmedia
+(0.0055)  etsy
+(0.0055)  green
+
+Found 15 rules with minsupport 0.0008 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.3   343  eco -> deal green
+ 0.0  1.0   343  deal green -> eco
+ 0.0  0.5   312  eco green -> deal
+ 0.0  0.6   312  deal -> eco green
+ 0.0  1.0   219  500aday -> teamfollowback
+ 0.0  0.3   205  eco -> deal
+ 0.0  0.6   205  deal -> eco
+ 0.0  1.0   183  eco deal -> green
+...
+
+-------------------
+2010/Sep Hashtags
+-------------------
+Found 10 itemsets with min support of 0.006
+Support   Frequent_Itemset
+(0.0452)  ff
+(0.0237)  fb
+(0.0165)  tcot
+(0.0156)  constantcontact
+(0.0095)  quote
+(0.0076)  teamfollowback
+(0.0071)  socialmedia
+(0.0068)  in
+(0.0066)  green
+(0.0060)  jobs
+
+Found 28 rules with minsupport 0.001 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.6   371  laborday -> sale follow
+ 0.0  1.0   371  sale follow -> laborday
+ 0.0  1.0   349  laborday follow -> sale
+ 0.0  0.6   349  sale -> laborday follow
+ 0.0  0.4   243  news -> living_green
+ 0.0  1.0   243  living_green -> news
+ 0.0  0.6   225  laborday -> sale
+ 0.0  0.6   225  sale -> laborday
+ 0.0  1.0   196  sale laborday -> follow
+ 0.0  0.3   196  follow -> sale laborday
+ 0.0  0.7   189  coupons -> deals
+ 0.0  1.0   186  topprog -> p2
+ ...
+
+-------------------
+2010/Aug Hashtags
+-------------------
+Found 12 itemsets with min support of 0.005
+Support   Frequent_Itemset
+(0.0494)  ff
+(0.0235)  fb
+(0.0174)  quote
+(0.0166)  tcot
+(0.0104)  teamfollowback
+(0.0087)  etsy
+(0.0080)  followfriday
+(0.0076)  jobs
+(0.0075)  in
+(0.0073)  socialmedia
+(0.0063)  free
+(0.0055)  marketing
+
+Found 37 rules with minsupport 0.0008 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.7   796  jobhunt -> jobsearch jobseekers
+ 0.0  0.9   796  jobsearch jobseekers -> jobhunt
+ 0.0  0.8   640  jobhunt jobsearch -> jobseekers
+ 0.0  0.7   640  jobseekers -> jobhunt jobsearch
+ 0.0  0.7   578  jobhunt -> jobseekers
+ 0.0  0.7   578  jobseekers -> jobhunt
+ 0.0  0.4   401  jobsearch -> jobhunt jobseekers
+ 0.0  1.0   401  jobhunt jobseekers -> jobsearch
+ 0.0  0.4   361  jobsearch -> jobhunt
+ 0.0  0.9   361  jobhunt -> jobsearch
+ 0.0  0.6   348  ismilewhen -> notallblackpeople
+ 0.0  0.8   348  notallblackpeople -> ismilewhen
+ 0.0  0.4   311  chs -> mtp
+ 0.0  1.0   311  mtp -> chs
+ 0.0  0.7   308  mlb -> yankees
+ 0.0  0.9   308  yankees -> mlb
+...
+
+-------------------
+2010/Jul Hashtags
+-------------------
+Found 11 itemsets with min support of 0.007
+Support   Frequent_Itemset
+(0.0538)  ff
+(0.0255)  fb
+(0.0233)  tcot
+(0.0154)  quote
+(0.0113)  worldcup
+(0.0096)  followfriday
+(0.0094)  teamfollowback
+(0.0086)  etsy
+(0.0077)  free
+(0.0072)  apple
+(0.0071)  teaparty
+
+Found 70 rules with minsupport 0.0008 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.9   897  leads -> staffing quotes
+ 0.0  0.9   897  staffing quotes -> leads
+ 0.0  0.9   881  sanantonio -> satx
+ 0.0  0.8   881  satx -> sanantonio
+ 0.0  1.0   820  leads quotes -> staffing
+ 0.0  0.7   820  staffing -> leads quotes
+ 0.0  1.0   802  leads -> staffing
+ 0.0  0.8   802  staffing -> leads
+ 0.0  0.4   415  icantstop -> sdcc free
+ 0.0  0.4   399  stl -> stlouis
+ 0.0  0.9   399  stlouis -> stl
+ 0.0  0.4   386  fitness -> health healthcare
+ 0.0  0.6   300  yankees -> mlb
+ 0.0  0.4   300  mlb -> yankees
+ ....
+
+-------------------
+2010/Jun Hashtags
+-------------------
+Found 10 itemsets with min support of 0.007
+Support   Frequent_Itemset
+(0.0424)  ff
+(0.0249)  fb
+(0.0230)  worldcup
+(0.0225)  tcot
+(0.0170)  quote
+(0.0122)  oilspill
+(0.0085)  followfriday
+(0.0081)  photography
+(0.0079)  travel
+(0.0074)  usa
+
+Found 37 rules with minsupport 0.0015 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.9   450  mossad dubai -> assassins
+ 0.0  0.8   450  assassins -> mossad dubai
+ 0.0  0.8   424  assassins mossad -> dubai
+ 0.0  0.8   424  dubai -> assassins mossad
+ 0.0  0.8   424  assassins -> dubai
+ 0.0  0.8   424  dubai -> assassins
+ 0.0  0.7   358  mossad -> assassins
+ 0.0  1.0   358  assassins dubai -> mossad
+ 0.0  0.6   358  mossad -> assassins dubai
+ 0.0  1.0   358  assassins -> mossad
+ 0.0  0.6   338  mossad -> dubai
+ 0.0  0.9   338  dubai -> mossad
+ .....
+
+-------------------
+2010/Jun Hashtags
+-------------------
+Found 11 itemsets with min support of 0.007
+Support   Frequent_Itemset
+(0.0485)  ff
+(0.0254)  fb
+(0.0215)  tcot
+(0.0186)  quote
+(0.0126)  followfriday
+(0.0092)  nowplaying
+(0.0090)  oilspill
+(0.0090)  utribe
+(0.0079)  jobs
+(0.0072)  milwaukee
+(0.0070)  etsy
+
+Found 61 rules with minsupport 0.001 and minconfidence 0.3
+Supp Conf  Lift  Rule
+ 0.0  0.9   621  wcot -> wasen
+ 0.0  0.9   621  wasen -> wcot
+ 0.0  1.0   415  kendra -> eshows
+ 0.0  1.0   415  eshows -> kendra
+ 0.0  0.6   391  gop teaparty -> redco tcot
+ 0.0  0.8   391  redco tcot -> gop teaparty
+ 0.0  0.8   384  redco -> gop teaparty tcot
+ 0.0  0.7   384  gop teaparty tcot -> redco
+ 0.0  0.6   364  gop teaparty -> redco
+ 0.0  0.8   364  redco -> gop teaparty
+ 0.0  0.4   288  gop tcot -> teaparty redco
+ 0.0  0.8   259  credit -> finance debt
+ 0.0  0.4   259  finance debt -> credit
+ ...
